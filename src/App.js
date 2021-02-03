@@ -2,6 +2,17 @@ import React from "react"
 import "./App.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Button, Form, FormControl } from "react-bootstrap"
+import { connect } from "react-redux"
+import { Link } from "react-router-dom"
+const mapStateToProps = (state) => state
+
+const mapDispatchToProps = (dispatch) => ({
+	addJobToFavs: (job) =>
+		dispatch({
+			type: "ADD_JOB_TO_FAVS",
+			payload: job,
+		}),
+})
 
 class App extends React.Component {
 	state = {
@@ -13,7 +24,7 @@ class App extends React.Component {
 		super(props)
 	}
 	handleinput = (event) => {
-		console.log(event.target.value)
+		//console.log(event.target.value)
 		const newstate = {}
 		newstate[event.target.placeholder] = event.target.value
 		this.setState(newstate)
@@ -34,11 +45,12 @@ class App extends React.Component {
 		}
 	}
 	componentDidUpdate = (oldprops) => {
-		console.log("yeah we got an update")
+		//console.log("yeah we got an update")
 	}
 	render() {
 		return (
 			<div className="">
+				<Link to="/favs">go to /favs</Link>
 				<div className="container mx-auto my-5 rounded-10 border border-dark">
 					<Form inline onSubmit={this.search}>
 						<FormControl
@@ -64,7 +76,7 @@ class App extends React.Component {
 				<div className="container mx-auto">
 					{this.state.results !== [] &&
 						this.state.results.map((job, index) => (
-							<div>
+							<div onClick={() => this.props.addJobToFavs(job)}>
 								<b>Company: </b>
 								{job.company}
 								<b> Location: </b>
@@ -77,4 +89,4 @@ class App extends React.Component {
 	}
 }
 
-export default App
+export default connect(mapStateToProps, mapDispatchToProps)(App)
