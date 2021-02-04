@@ -28,7 +28,8 @@ class Favs extends React.Component {
 				<div className="container mx-auto">
 					{this.props.favs.jobs !== [] &&
 						this.props.favs.jobs.map((job, index) => (
-							<div onClick={() => this.props.removeJobFromFavs(job)}>
+							<div>
+								<span onClick={() => this.props.removeJobFromFavs(job)}>♥</span>
 								<b>Company: </b>
 								{job.company}
 								<b> Location: </b>

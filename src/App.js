@@ -12,6 +12,11 @@ const mapDispatchToProps = (dispatch) => ({
 			type: "ADD_JOB_TO_FAVS",
 			payload: job,
 		}),
+	removeJobFromFavs: (id) =>
+		dispatch({
+			type: "REMOVE_JOB_FROM_FAVS",
+			payload: id,
+		}),
 })
 
 class App extends React.Component {
@@ -76,11 +81,33 @@ class App extends React.Component {
 				<div className="container mx-auto">
 					{this.state.results !== [] &&
 						this.state.results.map((job, index) => (
-							<div onClick={() => this.props.addJobToFavs(job)}>
-								<b>Company: </b>
-								{job.company}
-								<b> Location: </b>
-								{job.location}
+							<div key={job.id}>
+								<span
+									onClick={() => this.props.addJobToFavs(job)}
+									className={
+										this.props.favs.jobs.find((f) => f.id === job.id)
+											? "d-none"
+											: ""
+									}
+								>
+									♡
+								</span>
+								<span
+									onClick={() => this.props.removeJobFromFavs(job)}
+									className={
+										this.props.favs.jobs.find((f) => f.id === job.id)
+											? ""
+											: "d-none"
+									}
+								>
+									♥
+								</span>
+								<Link to="/view">
+									<b>Company: </b>
+									{job.company}
+									<b> Location: </b>
+									{job.location}
+								</Link>
 							</div>
 						))}
 				</div>

@@ -4,7 +4,7 @@ export default function (state = {}, action) {
 			return {
 				...state,
 				favs: {
-					...state.cart,
+					...state.favs,
 					jobs: state.favs.jobs.concat(action.payload),
 				},
 			}
@@ -12,10 +12,8 @@ export default function (state = {}, action) {
 			return {
 				...state,
 				favs: {
-					...state.cart,
-					jobs: [
-						...state.favs.jobs.filter((bookId) => bookId !== action.payload),
-					],
+					...state.favs,
+					jobs: [...state.favs.jobs.filter((id) => id !== action.payload)],
 				},
 			}
 
@@ -23,7 +21,7 @@ export default function (state = {}, action) {
 			return {
 				...state,
 				selected: {
-					...state.job,
+					...state.selected,
 					job: action.payload,
 				},
 			}
